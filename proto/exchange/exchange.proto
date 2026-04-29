@@ -1,0 +1,203 @@
+syntax = "proto3";
+
+package exchange.exchange;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/exchange;exchange";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "exchange/common.proto";  // Import the common proto
+
+// Exchange service definition.
+service ExchangeService {
+  rpc Get(GetRequest) returns (Exchange);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // new method
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+  // For large files, using streaming
+  rpc UploadLogo(stream UploadLogoRequest) returns (UploadLogoResponse);
+
+  // coin
+  rpc GetCoin(GetCoinRequest) returns (ExchangeCoin);
+  rpc ListCoin(ListCoinRequest) returns (ListCoinResponse);
+
+  // balance
+  rpc GetBalance(GetBalanceRequest) returns (ExchangeBalance);
+  rpc ListBalance(ListBalanceRequest) returns (ListBalanceResponse);
+}
+
+// Exchange message.
+message Exchange {
+  string uid = 1;
+  string name = 2;
+  optional string url = 3;
+  optional string logo = 4;
+  bool active = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+
+  // extra
+  optional google.protobuf.Struct logo_thumbnail = 8;
+}
+
+// Exchange Coin message
+message ExchangeCoin {
+  string uid = 1;
+  string exchange_uid = 2;
+  string coin_uid = 3;
+  string ext_id = 4;
+  bool can_deposit = 5;
+  optional string deposit_minimum = 6;
+  bool can_withdraw = 7;
+  string withdraw_fee = 8;
+  optional string withdraw_minimum = 9;
+  optional string withdraw_maximum = 10;
+  bool delisting = 11;
+  optional google.protobuf.Timestamp date_synced = 12;
+  bool active = 13;
+  google.protobuf.Timestamp created_at = 14;
+  google.protobuf.Timestamp updated_at = 15;
+}
+
+// Exchange Balance message
+message ExchangeBalance {
+  string uid = 1;
+  string exchange_uid = 2;
+  string coin_uid = 3;
+  string available = 4;
+  string locked = 5;
+  string pending = 6;
+  optional google.protobuf.Timestamp date_synced = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+// Request message for Get Exchange.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for List Exchange.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter=2;
+}
+
+// Filter message for request List Exchange.
+message FilterRequest {
+  repeated string uids = 1;
+  optional bool active = 2;
+  optional string name = 3;
+  optional string query = 4;
+}
+
+// Response message containing a list of items.
+message ListResponse {
+  repeated Exchange items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Exchange with base64 logo for small files.
+message AddRequest {
+  string name = 1;
+  optional string url = 2;
+  optional string logo = 3; // Base64-encoded file content for small files
+  optional bool active = 4;
+}
+
+// Response message for Add Exchange.
+message AddResponse {
+  string uid = 1;  // The UID of the newly added Exchange.
+}
+
+// Request message for Update Exchange with base64 logo for small files.
+message UpdateRequest {
+  string uid = 1;
+  optional string name = 2;
+  optional string url = 3;
+  optional string logo = 4;// Base64-encoded file content for small files
+  optional bool active = 5;
+}
+
+// Response message for Update Exchange.
+message UpdateResponse {
+  bool success = 1;  // Indicates whether the update was successful.
+}
+
+// Request message for Delete Exchange.
+message DeleteRequest {
+  string uid = 1;        // Unique identifier for the Exchange to be deleted.
+}
+
+// Response message for Delete Exchange.
+message DeleteResponse {
+  bool success = 1;      // Indicate whether the Exchange was successfully deleted.
+}
+
+// Request message for uploading logo in chunks for large files.
+message UploadLogoRequest {
+  bytes chunk = 1;  // File chunk data for large files
+}
+
+// Response message for UploadLogo.
+message UploadLogoResponse {
+  string logo_url = 1;  // URL or location of the uploaded logo
+}
+
+// Request message for Get Exchange Coin.
+message GetCoinRequest {
+  string exchange_uid = 1;  // The UID of the exchange
+  string coin_uid = 2;      // The UID of the coin
+}
+
+// Request message for List Exchange Coin.
+message ListCoinRequest {
+  string exchange_uid = 1;  // The UID of the exchange
+  common.Pagination pagination = 2;
+  FilterCoinRequest filter=3;
+}
+
+// Filter message for request List Exchange Coin.
+message FilterCoinRequest {
+  repeated string uids = 1;
+  repeated string coin_uids = 2;
+  repeated string ext_ids = 3;
+  optional bool active = 4;
+  optional bool delisting = 5;
+  optional string query = 6;
+}
+
+// Response message containing a list of items.
+message ListCoinResponse {
+  repeated ExchangeCoin items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Get Exchange Balance.
+message GetBalanceRequest {
+  string exchange_uid = 1;  // The UID of the exchange
+  string coin_uid = 2;      // The UID of the coin
+}
+
+// Request message for List Exchange Balance.
+message ListBalanceRequest {
+  string exchange_uid = 1;  // The UID of the exchange
+  common.Pagination pagination = 2;
+  FilterBalanceRequest filter=3;
+}
+
+// Filter message for request List Exchange Balance.
+message FilterBalanceRequest {
+  repeated string uids = 1;
+  repeated string coin_uids = 2;
+}
+
+// Response message containing a list of items.
+message ListBalanceResponse {
+  repeated ExchangeBalance items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}

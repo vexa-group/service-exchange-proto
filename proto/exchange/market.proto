@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package exchange.market;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/market;market";
+
+import "google/protobuf/timestamp.proto";
+import "exchange/common.proto";  // Import the common proto
+
+// Market service definition.
+service MarketService {
+  rpc Get(GetRequest) returns (Market);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // new method
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+  // depth
+  rpc GetDepth(GetDepthRequest) returns (MarketDepth);
+}
+
+// Market message.
+message Market {
+  string uid = 1;
+  string exchange_uid = 2;
+  string source_uid = 3;
+  string target_uid = 4;
+  string ticker = 5;
+  int32 source_precision = 6;
+  int32 target_precision = 7;
+  optional string min_amount = 8;
+  optional string min_price = 9;
+  optional string fee = 10;
+  optional string volume = 11;
+  optional string last_ask = 12;
+  optional string last_bid = 13;
+  optional google.protobuf.Timestamp last_trade = 14;
+  optional google.protobuf.Timestamp last_sync = 15;
+  optional google.protobuf.Timestamp last_update_depth = 16;
+  string ext_id = 17;
+  bool active = 18;
+  google.protobuf.Timestamp created_at = 19;
+  google.protobuf.Timestamp updated_at = 20;
+}
+
+message MarketAsk {
+  string price=1;
+  string amount=2;
+}
+
+message MarketBid {
+  string price=1;
+  string amount=2;
+}
+
+message MarketDepth {
+  string uid = 1;
+  repeated MarketAsk asks=2;
+  repeated MarketBid bids=3;
+}
+
+// Request message for Get Market.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for ListMarkets.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter=2;
+}
+
+// Filter message for request List Market.
+message FilterRequest {
+  repeated string uids = 1;
+  repeated string exchange_uids = 2;
+  repeated string source_uids = 3;
+  repeated string target_uids = 4;
+  repeated string coin_uids = 5;
+  repeated string ext_ids = 6;
+  optional bool active = 7;
+  optional string query = 8;
+}
+
+// Response message containing a list of items.
+message ListResponse {
+  repeated Market items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Market with base64 logo for small files.
+message AddRequest {
+  string exchange_uid = 1;
+  string source_uid = 2;
+  string target_uid = 3;
+  string ticker = 4;
+  int32 source_precision = 5;
+  int32 target_precision = 6;
+  optional string min_amount = 7;
+  optional string min_price = 8;
+  optional string fee = 9;
+  optional string volume = 10;
+  optional string last_ask = 11;
+  optional string last_bid = 12;
+  optional google.protobuf.Timestamp last_trade = 13;
+  optional google.protobuf.Timestamp last_sync = 14;
+  optional google.protobuf.Timestamp last_update_depth = 15;
+  string ext_id = 16;
+  optional bool active = 17;
+}
+
+// Response message for Add Market.
+message AddResponse {
+  string uid = 1;  // The UID of the newly added Market.
+}
+
+// Request message for Update Market with base64 logo for small files.
+message UpdateRequest {
+  string uid = 1;
+  optional string exchange_uid = 2;
+  optional string source_uid = 3;
+  optional string target_uid = 4;
+  optional string ticker = 5;
+  optional int32 source_precision = 6;
+  optional int32 target_precision = 7;
+  optional string min_amount = 8;
+  optional string min_price = 9;
+  optional string fee = 10;
+  optional string volume = 11;
+  optional string last_ask = 12;
+  optional string last_bid = 13;
+  optional google.protobuf.Timestamp last_trade = 14;
+  optional google.protobuf.Timestamp last_sync = 15;
+  optional google.protobuf.Timestamp last_update_depth = 16;
+  optional string ext_id = 17;
+  optional bool active = 18;
+}
+
+// Response message for Update Market.
+message UpdateResponse {
+  bool success = 1;  // Indicates whether the update was successful.
+}
+
+// Request message for Delete Market.
+message DeleteRequest {
+  string uid = 1;        // Unique identifier for the Market to be deleted.
+}
+
+// Response message for Delete Market.
+message DeleteResponse {
+  bool success = 1;      // Indicate whether the Market was successfully deleted.
+}
+
+// Request message for Get Market Depth
+message GetDepthRequest {
+  string uid = 1;  // UID of the market for which to retrieve depth
+}

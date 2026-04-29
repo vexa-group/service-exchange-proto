@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package exchange.provider;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/provider;provider";
+
+import "google/protobuf/timestamp.proto";
+import "exchange/common.proto";  // Import the common proto
+
+// Provider service definition.
+service ProviderService {
+  rpc Get(GetRequest) returns (Provider);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // new method
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+  // For large files, using streaming
+  rpc UploadLogo(stream UploadLogoRequest) returns (UploadLogoResponse);
+
+  // coin
+  rpc GetCoin(GetCoinRequest) returns (ProviderCoin);
+  rpc ListCoin(ListCoinRequest) returns (ListCoinResponse);
+}
+
+// Provider message.
+message Provider {
+  string uid = 1;
+  string name = 2;
+  string url = 3;
+  optional string logo = 4;
+  bool active = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+// Provider Coin message
+message ProviderCoin {
+  string uid = 1;
+  string provider_uid = 2;
+  string coin_uid = 3;
+  string ext_id = 4;
+  bool active = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+// Request message for Get Provider.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for ListProviders.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter=2;
+}
+
+// Filter message for request List Provider.
+message FilterRequest {
+  repeated string uids = 1;
+  optional bool active = 2;
+  optional string name = 3;
+  optional string query = 4;
+}
+
+// Response message containing a list of items.
+message ListResponse {
+  repeated Provider items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Provider with base64 logo for small files.
+message AddRequest {
+  string name = 1;
+  string url = 2;
+  optional string logo = 3; // Base64-encoded file content for small files
+  optional bool active = 4;
+}
+
+// Response message for Add Provider.
+message AddResponse {
+  string uid = 1;  // The UID of the newly added Provider.
+}
+
+// Request message for Update Provider with base64 logo for small files.
+message UpdateRequest {
+  string uid = 1;
+  optional string name = 2;
+  optional string url = 3;
+  optional string logo = 4;// Base64-encoded file content for small files
+  optional bool active = 5;
+}
+
+// Response message for Update Provider.
+message UpdateResponse {
+  bool success = 1;  // Indicates whether the update was successful.
+}
+
+// Request message for Delete Provider.
+message DeleteRequest {
+  string uid = 1;        // Unique identifier for the Provider to be deleted.
+}
+
+// Response message for Delete Provider.
+message DeleteResponse {
+  bool success = 1;      // Indicate whether the Provider was successfully deleted.
+}
+
+// Request message for uploading logo in chunks for large files.
+message UploadLogoRequest {
+  bytes chunk = 1;  // File chunk data for large files
+}
+
+// Response message for UploadLogo.
+message UploadLogoResponse {
+  string logo_url = 1;  // URL or location of the uploaded logo
+}
+
+// Request message for Get Provider Coin.
+message GetCoinRequest {
+  string provider_uid = 1;  // The UID of the provider
+  string coin_uid = 2;      // The UID of the coin
+}
+
+// Request message for List Provider Coin.
+message ListCoinRequest {
+  string provider_uid = 1;  // The UID of the provider
+  common.Pagination pagination = 2;
+  FilterCoinRequest filter=3;
+}
+
+// Filter message for request List Provider Coin.
+message FilterCoinRequest {
+  repeated string uids = 1;
+  repeated string coin_uids = 2;
+  repeated string ext_ids = 3;
+  optional bool active = 4;
+  optional string query = 5;
+}
+
+// Response message containing a list of items.
+message ListCoinResponse {
+  repeated ProviderCoin items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
