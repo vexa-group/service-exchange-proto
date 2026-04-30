@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package exchange.coin;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/coin;coin";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "exchange/common.proto";  // Import the common proto
+
+// Coin service definition.
+service CoinService {
+  rpc Get(GetRequest) returns (Coin);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // new method
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+  // For large files, using streaming
+  rpc UploadLogo(stream UploadLogoRequest) returns (UploadLogoResponse);
+}
+
+// Coin message.
+message Coin {
+  string uid = 1;
+  string symbol = 2;
+  string name = 3;
+  optional int32 rank = 4;
+  optional string logo = 5;
+  optional string url = 6;
+  optional string description = 7;
+  bool active = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+
+  // extra
+  optional google.protobuf.Struct logo_thumbnail = 11;
+}
+
+// Request message for Get Coin.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for List Coin.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter=2;
+}
+
+// Filter message for request List Coin.
+message FilterRequest {
+  repeated string uids = 3;
+  optional bool active = 1;
+  optional bool primary = 2;
+  optional string symbol = 4;
+  optional string name = 5;
+  optional string query = 6;
+}
+
+// Response message containing a list of items.
+message ListResponse {
+  repeated Coin items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Coin with base64 logo for small files.
+message AddRequest {
+  string symbol = 1;
+  string name = 2;
+  optional int32 rank = 3;
+  optional string logo = 4;           // Base64-encoded file content for small files
+  optional string url = 5;
+  optional string description = 6;
+  bool active = 7;
+}
+
+// Response message for Add Coin.
+message AddResponse {
+  string uid = 1;  // The UID of the newly added coin.
+}
+
+// Request message for Update Coin with base64 logo for small files.
+message UpdateRequest {
+  string uid = 1;
+  optional string symbol = 2;
+  optional string name = 3;
+  optional int32 rank = 4;
+  optional string logo = 5;           // Base64-encoded file content for small files
+  optional string url = 6;
+  optional string description = 7;
+  optional bool active = 8;
+}
+
+// Response message for Update Coin.
+message UpdateResponse {
+  bool success = 1;  // Indicates whether the update was successful.
+}
+
+// Request message for Delete Coin.
+message DeleteRequest {
+  string uid = 1;        // Unique identifier for the coin to be deleted.
+}
+
+// Response message for Delete Coin.
+message DeleteResponse {
+  bool success = 1;      // Indicate whether the coin was successfully deleted.
+}
+
+// Request message for uploading logo in chunks for large files.
+message UploadLogoRequest {
+  bytes chunk = 1;  // File chunk data for large files
+}
+
+// Response message for UploadLogo.
+message UploadLogoResponse {
+  string logo_url = 1;  // URL or location of the uploaded logo
+}

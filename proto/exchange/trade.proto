@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package exchange.trade;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/trade;trade";
+
+import "google/protobuf/timestamp.proto";
+import "exchange/common.proto";  // Import the common proto for pagination and meta
+
+// Trade service definition.
+service TradeService {
+  rpc Get(GetRequest) returns (Trade);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // Methods for adding, updating, and deleting trades
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+// Trade message.
+message Trade {
+  string uid = 1;
+  string order_uid = 2;
+  string side = 3;               // "buy" or "sell"
+  string amount = 4;             // String representation for amount
+  string price = 5;              // String representation for price
+  string fee = 6;                // String representation for fee
+  string total = 7;              // String representation for total
+  optional string ext_id = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+// Request message for Get Trade.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for List Trade.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter = 2;
+}
+
+// Filter message for request List Trade.
+message FilterRequest {
+  repeated string uids = 1;
+  repeated string order_uids = 2;
+  repeated string ext_ids = 3;
+  optional string side = 4;
+  optional string query = 5;
+}
+
+// Response message containing a list of trades.
+message ListResponse {
+  repeated Trade items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Trade.
+message AddRequest {
+  string order_uid = 1;
+  string side = 2;
+  string amount = 3;             // String representation for amount
+  string price = 4;              // String representation for price
+  string fee = 5;                // String representation for fee
+  string total = 6;              // String representation for total
+  optional string ext_id = 7;
+}
+
+// Response message for Add Trade.
+message AddResponse {
+  string uid = 1;
+}
+
+// Request message for Update Trade.
+message UpdateRequest {
+  string uid = 1;
+  optional string order_uid = 2;
+  optional string side = 3;
+  optional string amount = 4;             // String representation for amount
+  optional string price = 5;              // String representation for price
+  optional string fee = 6;                // String representation for fee
+  optional string total = 7;              // String representation for total
+  optional string ext_id = 8;
+}
+
+// Response message for Update Trade.
+message UpdateResponse {
+  bool success = 1;
+}
+
+// Request message for Delete Trade.
+message DeleteRequest {
+  string uid = 1;
+}
+
+// Response message for Delete Trade.
+message DeleteResponse {
+  bool success = 1;
+}

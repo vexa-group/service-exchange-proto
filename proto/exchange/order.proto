@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package exchange.order;
+
+option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/order;order";
+
+import "google/protobuf/timestamp.proto";
+import "exchange/common.proto";  // Import the common proto for pagination and meta
+
+// Order service definition.
+service OrderService {
+  rpc Get(GetRequest) returns (Order);
+  rpc List(ListRequest) returns (ListResponse);
+
+  // New methods for adding, updating, and deleting orders
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Cancel(CancelRequest) returns (CancelResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+// Order message.
+message Order {
+  string uid = 1;
+  string market_uid = 2;                      // Market UID for which this order is placed
+  string side = 3;                            // "buy" or "sell"
+  string type = 4;                            // "limit" or "market"
+  string amount = 5;                          // String representation of the order amount
+  string price = 6;                           // String representation of the price per unit
+  string fee = 7;                             // String representation of the transaction fee
+  string total = 8;                           // String representation of the total amount after fee
+  string filled = 9;                          // String representation of the filled amount
+  string status = 10;                         // Order status (e.g., "active", "completed", "cancelled")
+  optional string description = 11;                    // Description of the order
+  optional google.protobuf.Timestamp date_synced = 12; //Date synced with external
+  optional string ext_id = 13;                         // External ID for this order on the exchange
+  optional string ref = 14;                            // Reference name for this order (model name)
+  optional string ref_uid = 15;                        // Reference identifier for this order (model UID)
+  google.protobuf.Timestamp created_at = 16;
+  google.protobuf.Timestamp updated_at = 17;
+}
+
+// Request message for Get Order.
+message GetRequest {
+  string uid = 1;
+}
+
+// Request message for List Order.
+message ListRequest {
+  common.Pagination pagination = 1;
+  FilterRequest filter = 2;
+}
+
+// Filter message for request List Order.
+message FilterRequest {
+  repeated string uids = 1;
+  repeated string market_uids = 2;
+  repeated string ext_ids = 3;
+  repeated string status = 4;
+  repeated string status_not = 5;
+  repeated string ref = 6;
+  repeated string ref_uid = 7;
+  optional string query = 8;
+}
+
+// Response message containing a list of orders.
+message ListResponse {
+  repeated Order items = 1;
+  common.Meta meta = 2;  // Use Meta from the imported common.proto
+}
+
+// Request message for Add Order.
+message AddRequest {
+  string market_uid = 1;
+  string side = 2;                   // "buy" or "sell"
+  string type = 3;                   // "limit" or "market"
+  string amount = 4;                 // String representation of the order amount
+  string price = 5;                  // String representation of the price per unit
+  optional string ref = 6;                    // Reference model name
+  optional string ref_uid = 7;               // Reference model UID
+}
+
+// Response message for Add Order.
+message AddResponse {
+  string uid = 1;  // The UID of the newly added order.
+}
+
+// Request message for Cancel Order.
+message CancelRequest {
+  string uid = 1;
+  string reason = 2;
+}
+
+// Response message for Cancel Order.
+message CancelResponse {
+  bool success = 1;  // Indicates whether the cancel was successful.
+}
+
+// Request message for Delete Order.
+message DeleteRequest {
+  string uid = 1;  // Unique identifier for the order to be deleted.
+}
+
+// Response message for Delete Order.
+message DeleteResponse {
+  bool success = 1;  // Indicates whether the order was successfully deleted.
+}
