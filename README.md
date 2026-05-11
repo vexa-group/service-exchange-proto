@@ -154,7 +154,7 @@ The generated Python package is named `service_exchange_proto` and can be instal
 pip install git+https://github.com/vexa-group/service-exchange-proto.git
 
 # Install specific version tag
-pip install git+https://github.com/vexa-group/service-exchange-proto.git@v1.0.0
+pip install git+https://github.com/vexa-group/service-exchange-proto.git@v0.1.1
 ```
 
 ### Generate Both Go and Python
