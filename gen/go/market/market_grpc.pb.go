@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MarketService_Get_FullMethodName      = "/exchange.market.MarketService/Get"
-	MarketService_List_FullMethodName     = "/exchange.market.MarketService/List"
-	MarketService_Add_FullMethodName      = "/exchange.market.MarketService/Add"
-	MarketService_Update_FullMethodName   = "/exchange.market.MarketService/Update"
-	MarketService_Delete_FullMethodName   = "/exchange.market.MarketService/Delete"
-	MarketService_GetDepth_FullMethodName = "/exchange.market.MarketService/GetDepth"
+	MarketService_Get_FullMethodName                 = "/exchange.market.MarketService/Get"
+	MarketService_List_FullMethodName                = "/exchange.market.MarketService/List"
+	MarketService_Add_FullMethodName                 = "/exchange.market.MarketService/Add"
+	MarketService_Update_FullMethodName              = "/exchange.market.MarketService/Update"
+	MarketService_Delete_FullMethodName              = "/exchange.market.MarketService/Delete"
+	MarketService_GetDepth_FullMethodName            = "/exchange.market.MarketService/GetDepth"
+	MarketService_UpdateDepthSnapshot_FullMethodName = "/exchange.market.MarketService/UpdateDepthSnapshot"
 )
 
 // MarketServiceClient is the client API for MarketService service.
@@ -41,6 +42,7 @@ type MarketServiceClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	// depth
 	GetDepth(ctx context.Context, in *GetDepthRequest, opts ...grpc.CallOption) (*MarketDepth, error)
+	UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*UpdateDepthSnapshotResponse, error)
 }
 
 type marketServiceClient struct {
@@ -111,6 +113,16 @@ func (c *marketServiceClient) GetDepth(ctx context.Context, in *GetDepthRequest,
 	return out, nil
 }
 
+func (c *marketServiceClient) UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*UpdateDepthSnapshotResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateDepthSnapshotResponse)
+	err := c.cc.Invoke(ctx, MarketService_UpdateDepthSnapshot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MarketServiceServer is the server API for MarketService service.
 // All implementations must embed UnimplementedMarketServiceServer
 // for forward compatibility.
@@ -125,6 +137,7 @@ type MarketServiceServer interface {
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	// depth
 	GetDepth(context.Context, *GetDepthRequest) (*MarketDepth, error)
+	UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*UpdateDepthSnapshotResponse, error)
 	mustEmbedUnimplementedMarketServiceServer()
 }
 
@@ -152,6 +165,9 @@ func (UnimplementedMarketServiceServer) Delete(context.Context, *DeleteRequest) 
 }
 func (UnimplementedMarketServiceServer) GetDepth(context.Context, *GetDepthRequest) (*MarketDepth, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetDepth not implemented")
+}
+func (UnimplementedMarketServiceServer) UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*UpdateDepthSnapshotResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateDepthSnapshot not implemented")
 }
 func (UnimplementedMarketServiceServer) mustEmbedUnimplementedMarketServiceServer() {}
 func (UnimplementedMarketServiceServer) testEmbeddedByValue()                       {}
@@ -282,6 +298,24 @@ func _MarketService_GetDepth_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MarketService_UpdateDepthSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDepthSnapshotRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServiceServer).UpdateDepthSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MarketService_UpdateDepthSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServiceServer).UpdateDepthSnapshot(ctx, req.(*UpdateDepthSnapshotRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MarketService_ServiceDesc is the grpc.ServiceDesc for MarketService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -312,6 +346,10 @@ var MarketService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDepth",
 			Handler:    _MarketService_GetDepth_Handler,
+		},
+		{
+			MethodName: "UpdateDepthSnapshot",
+			Handler:    _MarketService_UpdateDepthSnapshot_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

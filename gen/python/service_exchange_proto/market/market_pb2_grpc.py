@@ -65,6 +65,11 @@ class MarketServiceStub(object):
                 request_serializer=exchange_dot_market__pb2.GetDepthRequest.SerializeToString,
                 response_deserializer=exchange_dot_market__pb2.MarketDepth.FromString,
                 _registered_method=True)
+        self.UpdateDepthSnapshot = channel.unary_unary(
+                '/exchange.market.MarketService/UpdateDepthSnapshot',
+                request_serializer=exchange_dot_market__pb2.UpdateDepthSnapshotRequest.SerializeToString,
+                response_deserializer=exchange_dot_market__pb2.UpdateDepthSnapshotResponse.FromString,
+                _registered_method=True)
 
 
 class MarketServiceServicer(object):
@@ -109,6 +114,12 @@ class MarketServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateDepthSnapshot(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MarketServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -141,6 +152,11 @@ def add_MarketServiceServicer_to_server(servicer, server):
                     servicer.GetDepth,
                     request_deserializer=exchange_dot_market__pb2.GetDepthRequest.FromString,
                     response_serializer=exchange_dot_market__pb2.MarketDepth.SerializeToString,
+            ),
+            'UpdateDepthSnapshot': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateDepthSnapshot,
+                    request_deserializer=exchange_dot_market__pb2.UpdateDepthSnapshotRequest.FromString,
+                    response_serializer=exchange_dot_market__pb2.UpdateDepthSnapshotResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -306,6 +322,33 @@ class MarketService(object):
             '/exchange.market.MarketService/GetDepth',
             exchange_dot_market__pb2.GetDepthRequest.SerializeToString,
             exchange_dot_market__pb2.MarketDepth.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateDepthSnapshot(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/exchange.market.MarketService/UpdateDepthSnapshot',
+            exchange_dot_market__pb2.UpdateDepthSnapshotRequest.SerializeToString,
+            exchange_dot_market__pb2.UpdateDepthSnapshotResponse.FromString,
             options,
             channel_credentials,
             insecure,
