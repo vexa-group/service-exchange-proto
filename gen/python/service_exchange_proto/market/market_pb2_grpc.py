@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from service_exchange_proto.common import common_pb2 as exchange_dot_common__pb2
 from . import market_pb2 as exchange_dot_market__pb2
 
 GRPC_GENERATED_VERSION = '1.80.0'
@@ -68,7 +69,7 @@ class MarketServiceStub(object):
         self.UpdateDepthSnapshot = channel.unary_unary(
                 '/exchange.market.MarketService/UpdateDepthSnapshot',
                 request_serializer=exchange_dot_market__pb2.UpdateDepthSnapshotRequest.SerializeToString,
-                response_deserializer=exchange_dot_market__pb2.UpdateDepthSnapshotResponse.FromString,
+                response_deserializer=exchange_dot_common__pb2.Success.FromString,
                 _registered_method=True)
 
 
@@ -156,7 +157,7 @@ def add_MarketServiceServicer_to_server(servicer, server):
             'UpdateDepthSnapshot': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateDepthSnapshot,
                     request_deserializer=exchange_dot_market__pb2.UpdateDepthSnapshotRequest.FromString,
-                    response_serializer=exchange_dot_market__pb2.UpdateDepthSnapshotResponse.SerializeToString,
+                    response_serializer=exchange_dot_common__pb2.Success.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -348,7 +349,7 @@ class MarketService(object):
             target,
             '/exchange.market.MarketService/UpdateDepthSnapshot',
             exchange_dot_market__pb2.UpdateDepthSnapshotRequest.SerializeToString,
-            exchange_dot_market__pb2.UpdateDepthSnapshotResponse.FromString,
+            exchange_dot_common__pb2.Success.FromString,
             options,
             channel_credentials,
             insecure,

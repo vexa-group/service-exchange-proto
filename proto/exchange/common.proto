@@ -4,6 +4,12 @@ package exchange.common;
 
 option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/common;common";
 
+message Empty {}
+
+message Success {
+  bool success = 1;
+}
+
 // Metadata message for pagination.
 message Meta {
   int32 page = 1;  // The current page of result

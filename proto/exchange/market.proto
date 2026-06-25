@@ -19,7 +19,7 @@ service MarketService {
 
   // depth
   rpc GetDepth(GetDepthRequest) returns (MarketDepth);
-  rpc UpdateDepthSnapshot(UpdateDepthSnapshotRequest) returns (UpdateDepthSnapshotResponse);
+  rpc UpdateDepthSnapshot(UpdateDepthSnapshotRequest) returns (exchange.common.Success);
 }
 
 // Market message.
@@ -164,9 +164,4 @@ message UpdateDepthSnapshotRequest {
   string uid = 1;  // UID of the market for which to update depth snapshot
   repeated MarketAsk asks = 2;
   repeated MarketBid bids = 3;
-}
-
-// Response message for update market depth snapshot
-message UpdateDepthSnapshotResponse {
-  bool success = 1;  // Indicates whether the update was successful.
 }

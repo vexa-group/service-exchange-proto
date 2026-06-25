@@ -1276,51 +1276,6 @@ func (x *UpdateDepthSnapshotRequest) GetBids() []*MarketBid {
 	return nil
 }
 
-// Response message for update market depth snapshot
-type UpdateDepthSnapshotResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // Indicates whether the update was successful.
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateDepthSnapshotResponse) Reset() {
-	*x = UpdateDepthSnapshotResponse{}
-	mi := &file_exchange_market_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateDepthSnapshotResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateDepthSnapshotResponse) ProtoMessage() {}
-
-func (x *UpdateDepthSnapshotResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_exchange_market_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateDepthSnapshotResponse.ProtoReflect.Descriptor instead.
-func (*UpdateDepthSnapshotResponse) Descriptor() ([]byte, []int) {
-	return file_exchange_market_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *UpdateDepthSnapshotResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
 var File_exchange_market_proto protoreflect.FileDescriptor
 
 const file_exchange_market_proto_rawDesc = "" +
@@ -1492,17 +1447,15 @@ const file_exchange_market_proto_rawDesc = "" +
 	"\x1aUpdateDepthSnapshotRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12.\n" +
 	"\x04asks\x18\x02 \x03(\v2\x1a.exchange.market.MarketAskR\x04asks\x12.\n" +
-	"\x04bids\x18\x03 \x03(\v2\x1a.exchange.market.MarketBidR\x04bids\"7\n" +
-	"\x1bUpdateDepthSnapshotResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa7\x04\n" +
+	"\x04bids\x18\x03 \x03(\v2\x1a.exchange.market.MarketBidR\x04bids2\x93\x04\n" +
 	"\rMarketService\x12;\n" +
 	"\x03Get\x12\x1b.exchange.market.GetRequest\x1a\x17.exchange.market.Market\x12C\n" +
 	"\x04List\x12\x1c.exchange.market.ListRequest\x1a\x1d.exchange.market.ListResponse\x12@\n" +
 	"\x03Add\x12\x1b.exchange.market.AddRequest\x1a\x1c.exchange.market.AddResponse\x12I\n" +
 	"\x06Update\x12\x1e.exchange.market.UpdateRequest\x1a\x1f.exchange.market.UpdateResponse\x12I\n" +
 	"\x06Delete\x12\x1e.exchange.market.DeleteRequest\x1a\x1f.exchange.market.DeleteResponse\x12J\n" +
-	"\bGetDepth\x12 .exchange.market.GetDepthRequest\x1a\x1c.exchange.market.MarketDepth\x12p\n" +
-	"\x13UpdateDepthSnapshot\x12+.exchange.market.UpdateDepthSnapshotRequest\x1a,.exchange.market.UpdateDepthSnapshotResponseBCZAgithub.com/vexa-group/service-exchange-proto/gen/go/market;marketb\x06proto3"
+	"\bGetDepth\x12 .exchange.market.GetDepthRequest\x1a\x1c.exchange.market.MarketDepth\x12\\\n" +
+	"\x13UpdateDepthSnapshot\x12+.exchange.market.UpdateDepthSnapshotRequest\x1a\x18.exchange.common.SuccessBCZAgithub.com/vexa-group/service-exchange-proto/gen/go/market;marketb\x06proto3"
 
 var (
 	file_exchange_market_proto_rawDescOnce sync.Once
@@ -1516,47 +1469,47 @@ func file_exchange_market_proto_rawDescGZIP() []byte {
 	return file_exchange_market_proto_rawDescData
 }
 
-var file_exchange_market_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_exchange_market_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_exchange_market_proto_goTypes = []any{
-	(*Market)(nil),                      // 0: exchange.market.Market
-	(*MarketAsk)(nil),                   // 1: exchange.market.MarketAsk
-	(*MarketBid)(nil),                   // 2: exchange.market.MarketBid
-	(*MarketDepth)(nil),                 // 3: exchange.market.MarketDepth
-	(*GetRequest)(nil),                  // 4: exchange.market.GetRequest
-	(*ListRequest)(nil),                 // 5: exchange.market.ListRequest
-	(*FilterRequest)(nil),               // 6: exchange.market.FilterRequest
-	(*ListResponse)(nil),                // 7: exchange.market.ListResponse
-	(*AddRequest)(nil),                  // 8: exchange.market.AddRequest
-	(*AddResponse)(nil),                 // 9: exchange.market.AddResponse
-	(*UpdateRequest)(nil),               // 10: exchange.market.UpdateRequest
-	(*UpdateResponse)(nil),              // 11: exchange.market.UpdateResponse
-	(*DeleteRequest)(nil),               // 12: exchange.market.DeleteRequest
-	(*DeleteResponse)(nil),              // 13: exchange.market.DeleteResponse
-	(*GetDepthRequest)(nil),             // 14: exchange.market.GetDepthRequest
-	(*UpdateDepthSnapshotRequest)(nil),  // 15: exchange.market.UpdateDepthSnapshotRequest
-	(*UpdateDepthSnapshotResponse)(nil), // 16: exchange.market.UpdateDepthSnapshotResponse
-	(*timestamppb.Timestamp)(nil),       // 17: google.protobuf.Timestamp
-	(*common.Pagination)(nil),           // 18: exchange.common.Pagination
-	(*common.Meta)(nil),                 // 19: exchange.common.Meta
+	(*Market)(nil),                     // 0: exchange.market.Market
+	(*MarketAsk)(nil),                  // 1: exchange.market.MarketAsk
+	(*MarketBid)(nil),                  // 2: exchange.market.MarketBid
+	(*MarketDepth)(nil),                // 3: exchange.market.MarketDepth
+	(*GetRequest)(nil),                 // 4: exchange.market.GetRequest
+	(*ListRequest)(nil),                // 5: exchange.market.ListRequest
+	(*FilterRequest)(nil),              // 6: exchange.market.FilterRequest
+	(*ListResponse)(nil),               // 7: exchange.market.ListResponse
+	(*AddRequest)(nil),                 // 8: exchange.market.AddRequest
+	(*AddResponse)(nil),                // 9: exchange.market.AddResponse
+	(*UpdateRequest)(nil),              // 10: exchange.market.UpdateRequest
+	(*UpdateResponse)(nil),             // 11: exchange.market.UpdateResponse
+	(*DeleteRequest)(nil),              // 12: exchange.market.DeleteRequest
+	(*DeleteResponse)(nil),             // 13: exchange.market.DeleteResponse
+	(*GetDepthRequest)(nil),            // 14: exchange.market.GetDepthRequest
+	(*UpdateDepthSnapshotRequest)(nil), // 15: exchange.market.UpdateDepthSnapshotRequest
+	(*timestamppb.Timestamp)(nil),      // 16: google.protobuf.Timestamp
+	(*common.Pagination)(nil),          // 17: exchange.common.Pagination
+	(*common.Meta)(nil),                // 18: exchange.common.Meta
+	(*common.Success)(nil),             // 19: exchange.common.Success
 }
 var file_exchange_market_proto_depIdxs = []int32{
-	17, // 0: exchange.market.Market.last_trade:type_name -> google.protobuf.Timestamp
-	17, // 1: exchange.market.Market.last_sync:type_name -> google.protobuf.Timestamp
-	17, // 2: exchange.market.Market.last_update_depth:type_name -> google.protobuf.Timestamp
-	17, // 3: exchange.market.Market.created_at:type_name -> google.protobuf.Timestamp
-	17, // 4: exchange.market.Market.updated_at:type_name -> google.protobuf.Timestamp
+	16, // 0: exchange.market.Market.last_trade:type_name -> google.protobuf.Timestamp
+	16, // 1: exchange.market.Market.last_sync:type_name -> google.protobuf.Timestamp
+	16, // 2: exchange.market.Market.last_update_depth:type_name -> google.protobuf.Timestamp
+	16, // 3: exchange.market.Market.created_at:type_name -> google.protobuf.Timestamp
+	16, // 4: exchange.market.Market.updated_at:type_name -> google.protobuf.Timestamp
 	1,  // 5: exchange.market.MarketDepth.asks:type_name -> exchange.market.MarketAsk
 	2,  // 6: exchange.market.MarketDepth.bids:type_name -> exchange.market.MarketBid
-	18, // 7: exchange.market.ListRequest.pagination:type_name -> exchange.common.Pagination
+	17, // 7: exchange.market.ListRequest.pagination:type_name -> exchange.common.Pagination
 	6,  // 8: exchange.market.ListRequest.filter:type_name -> exchange.market.FilterRequest
 	0,  // 9: exchange.market.ListResponse.items:type_name -> exchange.market.Market
-	19, // 10: exchange.market.ListResponse.meta:type_name -> exchange.common.Meta
-	17, // 11: exchange.market.AddRequest.last_trade:type_name -> google.protobuf.Timestamp
-	17, // 12: exchange.market.AddRequest.last_sync:type_name -> google.protobuf.Timestamp
-	17, // 13: exchange.market.AddRequest.last_update_depth:type_name -> google.protobuf.Timestamp
-	17, // 14: exchange.market.UpdateRequest.last_trade:type_name -> google.protobuf.Timestamp
-	17, // 15: exchange.market.UpdateRequest.last_sync:type_name -> google.protobuf.Timestamp
-	17, // 16: exchange.market.UpdateRequest.last_update_depth:type_name -> google.protobuf.Timestamp
+	18, // 10: exchange.market.ListResponse.meta:type_name -> exchange.common.Meta
+	16, // 11: exchange.market.AddRequest.last_trade:type_name -> google.protobuf.Timestamp
+	16, // 12: exchange.market.AddRequest.last_sync:type_name -> google.protobuf.Timestamp
+	16, // 13: exchange.market.AddRequest.last_update_depth:type_name -> google.protobuf.Timestamp
+	16, // 14: exchange.market.UpdateRequest.last_trade:type_name -> google.protobuf.Timestamp
+	16, // 15: exchange.market.UpdateRequest.last_sync:type_name -> google.protobuf.Timestamp
+	16, // 16: exchange.market.UpdateRequest.last_update_depth:type_name -> google.protobuf.Timestamp
 	1,  // 17: exchange.market.UpdateDepthSnapshotRequest.asks:type_name -> exchange.market.MarketAsk
 	2,  // 18: exchange.market.UpdateDepthSnapshotRequest.bids:type_name -> exchange.market.MarketBid
 	4,  // 19: exchange.market.MarketService.Get:input_type -> exchange.market.GetRequest
@@ -1572,7 +1525,7 @@ var file_exchange_market_proto_depIdxs = []int32{
 	11, // 29: exchange.market.MarketService.Update:output_type -> exchange.market.UpdateResponse
 	13, // 30: exchange.market.MarketService.Delete:output_type -> exchange.market.DeleteResponse
 	3,  // 31: exchange.market.MarketService.GetDepth:output_type -> exchange.market.MarketDepth
-	16, // 32: exchange.market.MarketService.UpdateDepthSnapshot:output_type -> exchange.market.UpdateDepthSnapshotResponse
+	19, // 32: exchange.market.MarketService.UpdateDepthSnapshot:output_type -> exchange.common.Success
 	26, // [26:33] is the sub-list for method output_type
 	19, // [19:26] is the sub-list for method input_type
 	19, // [19:19] is the sub-list for extension type_name
@@ -1595,7 +1548,7 @@ func file_exchange_market_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_exchange_market_proto_rawDesc), len(file_exchange_market_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

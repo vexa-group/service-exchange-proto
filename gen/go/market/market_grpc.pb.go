@@ -8,6 +8,7 @@ package market
 
 import (
 	context "context"
+	common "github.com/vexa-group/service-exchange-proto/gen/go/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -42,7 +43,7 @@ type MarketServiceClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	// depth
 	GetDepth(ctx context.Context, in *GetDepthRequest, opts ...grpc.CallOption) (*MarketDepth, error)
-	UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*UpdateDepthSnapshotResponse, error)
+	UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*common.Success, error)
 }
 
 type marketServiceClient struct {
@@ -113,9 +114,9 @@ func (c *marketServiceClient) GetDepth(ctx context.Context, in *GetDepthRequest,
 	return out, nil
 }
 
-func (c *marketServiceClient) UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*UpdateDepthSnapshotResponse, error) {
+func (c *marketServiceClient) UpdateDepthSnapshot(ctx context.Context, in *UpdateDepthSnapshotRequest, opts ...grpc.CallOption) (*common.Success, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateDepthSnapshotResponse)
+	out := new(common.Success)
 	err := c.cc.Invoke(ctx, MarketService_UpdateDepthSnapshot_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -137,7 +138,7 @@ type MarketServiceServer interface {
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	// depth
 	GetDepth(context.Context, *GetDepthRequest) (*MarketDepth, error)
-	UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*UpdateDepthSnapshotResponse, error)
+	UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*common.Success, error)
 	mustEmbedUnimplementedMarketServiceServer()
 }
 
@@ -166,7 +167,7 @@ func (UnimplementedMarketServiceServer) Delete(context.Context, *DeleteRequest) 
 func (UnimplementedMarketServiceServer) GetDepth(context.Context, *GetDepthRequest) (*MarketDepth, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetDepth not implemented")
 }
-func (UnimplementedMarketServiceServer) UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*UpdateDepthSnapshotResponse, error) {
+func (UnimplementedMarketServiceServer) UpdateDepthSnapshot(context.Context, *UpdateDepthSnapshotRequest) (*common.Success, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateDepthSnapshot not implemented")
 }
 func (UnimplementedMarketServiceServer) mustEmbedUnimplementedMarketServiceServer() {}
