@@ -21,6 +21,86 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Empty struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Empty) Reset() {
+	*x = Empty{}
+	mi := &file_exchange_common_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Empty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Empty) ProtoMessage() {}
+
+func (x *Empty) ProtoReflect() protoreflect.Message {
+	mi := &file_exchange_common_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
+	return file_exchange_common_proto_rawDescGZIP(), []int{0}
+}
+
+type Success struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Success) Reset() {
+	*x = Success{}
+	mi := &file_exchange_common_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Success) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Success) ProtoMessage() {}
+
+func (x *Success) ProtoReflect() protoreflect.Message {
+	mi := &file_exchange_common_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Success.ProtoReflect.Descriptor instead.
+func (*Success) Descriptor() ([]byte, []int) {
+	return file_exchange_common_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Success) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 // Metadata message for pagination.
 type Meta struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -34,7 +114,7 @@ type Meta struct {
 
 func (x *Meta) Reset() {
 	*x = Meta{}
-	mi := &file_exchange_common_proto_msgTypes[0]
+	mi := &file_exchange_common_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +126,7 @@ func (x *Meta) String() string {
 func (*Meta) ProtoMessage() {}
 
 func (x *Meta) ProtoReflect() protoreflect.Message {
-	mi := &file_exchange_common_proto_msgTypes[0]
+	mi := &file_exchange_common_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +139,7 @@ func (x *Meta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Meta.ProtoReflect.Descriptor instead.
 func (*Meta) Descriptor() ([]byte, []int) {
-	return file_exchange_common_proto_rawDescGZIP(), []int{0}
+	return file_exchange_common_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Meta) GetPage() int32 {
@@ -103,7 +183,7 @@ type Pagination struct {
 
 func (x *Pagination) Reset() {
 	*x = Pagination{}
-	mi := &file_exchange_common_proto_msgTypes[1]
+	mi := &file_exchange_common_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -115,7 +195,7 @@ func (x *Pagination) String() string {
 func (*Pagination) ProtoMessage() {}
 
 func (x *Pagination) ProtoReflect() protoreflect.Message {
-	mi := &file_exchange_common_proto_msgTypes[1]
+	mi := &file_exchange_common_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -128,7 +208,7 @@ func (x *Pagination) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Pagination.ProtoReflect.Descriptor instead.
 func (*Pagination) Descriptor() ([]byte, []int) {
-	return file_exchange_common_proto_rawDescGZIP(), []int{1}
+	return file_exchange_common_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Pagination) GetPage() int32 {
@@ -163,7 +243,10 @@ var File_exchange_common_proto protoreflect.FileDescriptor
 
 const file_exchange_common_proto_rawDesc = "" +
 	"\n" +
-	"\x15exchange/common.proto\x12\x0fexchange.common\"\\\n" +
+	"\x15exchange/common.proto\x12\x0fexchange.common\"\a\n" +
+	"\x05Empty\"#\n" +
+	"\aSuccess\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\\\n" +
 	"\x04Meta\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\x12\x14\n" +
@@ -188,10 +271,12 @@ func file_exchange_common_proto_rawDescGZIP() []byte {
 	return file_exchange_common_proto_rawDescData
 }
 
-var file_exchange_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_exchange_common_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_exchange_common_proto_goTypes = []any{
-	(*Meta)(nil),       // 0: exchange.common.Meta
-	(*Pagination)(nil), // 1: exchange.common.Pagination
+	(*Empty)(nil),      // 0: exchange.common.Empty
+	(*Success)(nil),    // 1: exchange.common.Success
+	(*Meta)(nil),       // 2: exchange.common.Meta
+	(*Pagination)(nil), // 3: exchange.common.Pagination
 }
 var file_exchange_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -212,7 +297,7 @@ func file_exchange_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_exchange_common_proto_rawDesc), len(file_exchange_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
