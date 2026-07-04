@@ -33,15 +33,16 @@ service ExchangeService {
 // Exchange message.
 message Exchange {
   string uid = 1;
-  string name = 2;
-  optional string url = 3;
-  optional string logo = 4;
-  bool active = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+  string code = 2;
+  string name = 3;
+  optional string url = 4;
+  optional string logo = 5;
+  bool active = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
 
   // extra
-  optional google.protobuf.Struct logo_thumbnail = 8;
+  optional google.protobuf.Struct logo_thumbnail = 9;
 }
 
 // Exchange Coin message
@@ -103,10 +104,11 @@ message ListResponse {
 
 // Request message for Add Exchange with base64 logo for small files.
 message AddRequest {
-  string name = 1;
-  optional string url = 2;
-  optional string logo = 3; // Base64-encoded file content for small files
-  optional bool active = 4;
+  string code = 1;
+  string name = 2;
+  optional string url = 3;
+  optional string logo = 4; // Base64-encoded file content for small files
+  optional bool active = 5;
 }
 
 // Response message for Add Exchange.
@@ -117,10 +119,11 @@ message AddResponse {
 // Request message for Update Exchange with base64 logo for small files.
 message UpdateRequest {
   string uid = 1;
-  optional string name = 2;
-  optional string url = 3;
-  optional string logo = 4;// Base64-encoded file content for small files
-  optional bool active = 5;
+  optional string code = 2;
+  optional string name = 3;
+  optional string url = 4;
+  optional string logo = 5;// Base64-encoded file content for small files
+  optional bool active = 6;
 }
 
 // Response message for Update Exchange.
