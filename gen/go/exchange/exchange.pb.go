@@ -28,14 +28,15 @@ const (
 type Exchange struct {
 	state     protoimpl.MessageState `protogen:"open.v1"`
 	Uid       string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Name      string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Url       *string                `protobuf:"bytes,3,opt,name=url,proto3,oneof" json:"url,omitempty"`
-	Logo      *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"`
-	Active    bool                   `protobuf:"varint,5,opt,name=active,proto3" json:"active,omitempty"`
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Code      string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Name      string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Url       *string                `protobuf:"bytes,4,opt,name=url,proto3,oneof" json:"url,omitempty"`
+	Logo      *string                `protobuf:"bytes,5,opt,name=logo,proto3,oneof" json:"logo,omitempty"`
+	Active    bool                   `protobuf:"varint,6,opt,name=active,proto3" json:"active,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	// extra
-	LogoThumbnail *structpb.Struct `protobuf:"bytes,8,opt,name=logo_thumbnail,json=logoThumbnail,proto3,oneof" json:"logo_thumbnail,omitempty"`
+	LogoThumbnail *structpb.Struct `protobuf:"bytes,9,opt,name=logo_thumbnail,json=logoThumbnail,proto3,oneof" json:"logo_thumbnail,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -73,6 +74,13 @@ func (*Exchange) Descriptor() ([]byte, []int) {
 func (x *Exchange) GetUid() string {
 	if x != nil {
 		return x.Uid
+	}
+	return ""
+}
+
+func (x *Exchange) GetCode() string {
+	if x != nil {
+		return x.Code
 	}
 	return ""
 }
@@ -615,10 +623,11 @@ func (x *ListResponse) GetMeta() *common.Meta {
 // Request message for Add Exchange with base64 logo for small files.
 type AddRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Url           *string                `protobuf:"bytes,2,opt,name=url,proto3,oneof" json:"url,omitempty"`
-	Logo          *string                `protobuf:"bytes,3,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
-	Active        *bool                  `protobuf:"varint,4,opt,name=active,proto3,oneof" json:"active,omitempty"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Url           *string                `protobuf:"bytes,3,opt,name=url,proto3,oneof" json:"url,omitempty"`
+	Logo          *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
+	Active        *bool                  `protobuf:"varint,5,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -651,6 +660,13 @@ func (x *AddRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use AddRequest.ProtoReflect.Descriptor instead.
 func (*AddRequest) Descriptor() ([]byte, []int) {
 	return file_exchange_exchange_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *AddRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
 }
 
 func (x *AddRequest) GetName() string {
@@ -730,10 +746,11 @@ func (x *AddResponse) GetUid() string {
 type UpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Url           *string                `protobuf:"bytes,3,opt,name=url,proto3,oneof" json:"url,omitempty"`
-	Logo          *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
-	Active        *bool                  `protobuf:"varint,5,opt,name=active,proto3,oneof" json:"active,omitempty"`
+	Code          *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Name          *string                `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Url           *string                `protobuf:"bytes,4,opt,name=url,proto3,oneof" json:"url,omitempty"`
+	Logo          *string                `protobuf:"bytes,5,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
+	Active        *bool                  `protobuf:"varint,6,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -771,6 +788,13 @@ func (*UpdateRequest) Descriptor() ([]byte, []int) {
 func (x *UpdateRequest) GetUid() string {
 	if x != nil {
 		return x.Uid
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return ""
 }
@@ -1504,18 +1528,19 @@ var File_exchange_exchange_proto protoreflect.FileDescriptor
 
 const file_exchange_exchange_proto_rawDesc = "" +
 	"\n" +
-	"\x17exchange/exchange.proto\x12\x11exchange.exchange\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x15exchange/common.proto\"\xd7\x02\n" +
+	"\x17exchange/exchange.proto\x12\x11exchange.exchange\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x15exchange/common.proto\"\xeb\x02\n" +
 	"\bExchange\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x15\n" +
-	"\x03url\x18\x03 \x01(\tH\x00R\x03url\x88\x01\x01\x12\x17\n" +
-	"\x04logo\x18\x04 \x01(\tH\x01R\x04logo\x88\x01\x01\x12\x16\n" +
-	"\x06active\x18\x05 \x01(\bR\x06active\x129\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x15\n" +
+	"\x03url\x18\x04 \x01(\tH\x00R\x03url\x88\x01\x01\x12\x17\n" +
+	"\x04logo\x18\x05 \x01(\tH\x01R\x04logo\x88\x01\x01\x12\x16\n" +
+	"\x06active\x18\x06 \x01(\bR\x06active\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12C\n" +
-	"\x0elogo_thumbnail\x18\b \x01(\v2\x17.google.protobuf.StructH\x02R\rlogoThumbnail\x88\x01\x01B\x06\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12C\n" +
+	"\x0elogo_thumbnail\x18\t \x01(\v2\x17.google.protobuf.StructH\x02R\rlogoThumbnail\x88\x01\x01B\x06\n" +
 	"\x04_urlB\a\n" +
 	"\x05_logoB\x11\n" +
 	"\x0f_logo_thumbnail\"\xa6\x05\n" +
@@ -1576,24 +1601,27 @@ const file_exchange_exchange_proto_rawDesc = "" +
 	"\x06_query\"l\n" +
 	"\fListResponse\x121\n" +
 	"\x05items\x18\x01 \x03(\v2\x1b.exchange.exchange.ExchangeR\x05items\x12)\n" +
-	"\x04meta\x18\x02 \x01(\v2\x15.exchange.common.MetaR\x04meta\"\x89\x01\n" +
+	"\x04meta\x18\x02 \x01(\v2\x15.exchange.common.MetaR\x04meta\"\x9d\x01\n" +
 	"\n" +
 	"AddRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x15\n" +
-	"\x03url\x18\x02 \x01(\tH\x00R\x03url\x88\x01\x01\x12\x17\n" +
-	"\x04logo\x18\x03 \x01(\tH\x01R\x04logo\x88\x01\x01\x12\x1b\n" +
-	"\x06active\x18\x04 \x01(\bH\x02R\x06active\x88\x01\x01B\x06\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x15\n" +
+	"\x03url\x18\x03 \x01(\tH\x00R\x03url\x88\x01\x01\x12\x17\n" +
+	"\x04logo\x18\x04 \x01(\tH\x01R\x04logo\x88\x01\x01\x12\x1b\n" +
+	"\x06active\x18\x05 \x01(\bH\x02R\x06active\x88\x01\x01B\x06\n" +
 	"\x04_urlB\a\n" +
 	"\x05_logoB\t\n" +
 	"\a_active\"\x1f\n" +
 	"\vAddResponse\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\tR\x03uid\"\xac\x01\n" +
+	"\x03uid\x18\x01 \x01(\tR\x03uid\"\xce\x01\n" +
 	"\rUpdateRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x15\n" +
-	"\x03url\x18\x03 \x01(\tH\x01R\x03url\x88\x01\x01\x12\x17\n" +
-	"\x04logo\x18\x04 \x01(\tH\x02R\x04logo\x88\x01\x01\x12\x1b\n" +
-	"\x06active\x18\x05 \x01(\bH\x03R\x06active\x88\x01\x01B\a\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x15\n" +
+	"\x03url\x18\x04 \x01(\tH\x02R\x03url\x88\x01\x01\x12\x17\n" +
+	"\x04logo\x18\x05 \x01(\tH\x03R\x04logo\x88\x01\x01\x12\x1b\n" +
+	"\x06active\x18\x06 \x01(\bH\x04R\x06active\x88\x01\x01B\a\n" +
+	"\x05_codeB\a\n" +
 	"\x05_nameB\x06\n" +
 	"\x04_urlB\a\n" +
 	"\x05_logoB\t\n" +
