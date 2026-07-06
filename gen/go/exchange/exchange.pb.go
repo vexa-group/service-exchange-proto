@@ -503,8 +503,8 @@ type FilterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uids          []string               `protobuf:"bytes,1,rep,name=uids,proto3" json:"uids,omitempty"`
 	Active        *bool                  `protobuf:"varint,2,opt,name=active,proto3,oneof" json:"active,omitempty"`
-	Name          *string                `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Query         *string                `protobuf:"bytes,4,opt,name=query,proto3,oneof" json:"query,omitempty"`
+	Code          *string                `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Query         *string                `protobuf:"bytes,5,opt,name=query,proto3,oneof" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -553,9 +553,9 @@ func (x *FilterRequest) GetActive() bool {
 	return false
 }
 
-func (x *FilterRequest) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
+func (x *FilterRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return ""
 }
@@ -1594,10 +1594,10 @@ const file_exchange_exchange_proto_rawDesc = "" +
 	"\rFilterRequest\x12\x12\n" +
 	"\x04uids\x18\x01 \x03(\tR\x04uids\x12\x1b\n" +
 	"\x06active\x18\x02 \x01(\bH\x00R\x06active\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x03 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05query\x18\x04 \x01(\tH\x02R\x05query\x88\x01\x01B\t\n" +
+	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x19\n" +
+	"\x05query\x18\x05 \x01(\tH\x02R\x05query\x88\x01\x01B\t\n" +
 	"\a_activeB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_codeB\b\n" +
 	"\x06_query\"l\n" +
 	"\fListResponse\x121\n" +
 	"\x05items\x18\x01 \x03(\v2\x1b.exchange.exchange.ExchangeR\x05items\x12)\n" +

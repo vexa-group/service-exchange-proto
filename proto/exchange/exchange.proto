@@ -92,8 +92,8 @@ message ListRequest {
 message FilterRequest {
   repeated string uids = 1;
   optional bool active = 2;
-  optional string name = 3;
-  optional string query = 4;
+  optional string code = 3;
+  optional string query = 5;
 }
 
 // Response message containing a list of items.
