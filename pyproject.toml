@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "service-exchange-proto"
-version = "0.1.3"
+version = "0.1.4"
 description = "Protocol Buffer definitions and gRPC contracts for Exchange Service"
 authors = [
 	"Aditya <aditya.kw90@gmail.com>",
