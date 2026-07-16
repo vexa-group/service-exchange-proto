@@ -10,6 +10,7 @@ import (
 	common "github.com/vexa-group/service-exchange-proto/gen/go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -25,14 +26,17 @@ const (
 
 // Provider message.
 type Provider struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uid           string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Url           string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
-	Logo          *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"`
-	Active        bool                   `protobuf:"varint,5,opt,name=active,proto3" json:"active,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Uid       string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Code      string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Name      string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Url       string                 `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	Logo      *string                `protobuf:"bytes,5,opt,name=logo,proto3,oneof" json:"logo,omitempty"`
+	Active    bool                   `protobuf:"varint,6,opt,name=active,proto3" json:"active,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	// extra
+	LogoThumbnail *structpb.Struct `protobuf:"bytes,9,opt,name=logo_thumbnail,json=logoThumbnail,proto3,oneof" json:"logo_thumbnail,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -70,6 +74,13 @@ func (*Provider) Descriptor() ([]byte, []int) {
 func (x *Provider) GetUid() string {
 	if x != nil {
 		return x.Uid
+	}
+	return ""
+}
+
+func (x *Provider) GetCode() string {
+	if x != nil {
+		return x.Code
 	}
 	return ""
 }
@@ -112,6 +123,13 @@ func (x *Provider) GetCreatedAt() *timestamppb.Timestamp {
 func (x *Provider) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *Provider) GetLogoThumbnail() *structpb.Struct {
+	if x != nil {
+		return x.LogoThumbnail
 	}
 	return nil
 }
@@ -312,7 +330,7 @@ type FilterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uids          []string               `protobuf:"bytes,1,rep,name=uids,proto3" json:"uids,omitempty"`
 	Active        *bool                  `protobuf:"varint,2,opt,name=active,proto3,oneof" json:"active,omitempty"`
-	Name          *string                `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Code          *string                `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
 	Query         *string                `protobuf:"bytes,4,opt,name=query,proto3,oneof" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -362,9 +380,9 @@ func (x *FilterRequest) GetActive() bool {
 	return false
 }
 
-func (x *FilterRequest) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
+func (x *FilterRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return ""
 }
@@ -432,10 +450,11 @@ func (x *ListResponse) GetMeta() *common.Meta {
 // Request message for Add Provider with base64 logo for small files.
 type AddRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	Logo          *string                `protobuf:"bytes,3,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
-	Active        *bool                  `protobuf:"varint,4,opt,name=active,proto3,oneof" json:"active,omitempty"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Url           string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
+	Logo          *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
+	Active        *bool                  `protobuf:"varint,5,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -468,6 +487,13 @@ func (x *AddRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use AddRequest.ProtoReflect.Descriptor instead.
 func (*AddRequest) Descriptor() ([]byte, []int) {
 	return file_exchange_provider_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AddRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
 }
 
 func (x *AddRequest) GetName() string {
@@ -547,10 +573,11 @@ func (x *AddResponse) GetUid() string {
 type UpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Url           *string                `protobuf:"bytes,3,opt,name=url,proto3,oneof" json:"url,omitempty"`
-	Logo          *string                `protobuf:"bytes,4,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
-	Active        *bool                  `protobuf:"varint,5,opt,name=active,proto3,oneof" json:"active,omitempty"`
+	Code          *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Name          *string                `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Url           *string                `protobuf:"bytes,4,opt,name=url,proto3,oneof" json:"url,omitempty"`
+	Logo          *string                `protobuf:"bytes,5,opt,name=logo,proto3,oneof" json:"logo,omitempty"` // Base64-encoded file content for small files
+	Active        *bool                  `protobuf:"varint,6,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -588,6 +615,13 @@ func (*UpdateRequest) Descriptor() ([]byte, []int) {
 func (x *UpdateRequest) GetUid() string {
 	if x != nil {
 		return x.Uid
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return ""
 }
@@ -1093,18 +1127,21 @@ var File_exchange_provider_proto protoreflect.FileDescriptor
 
 const file_exchange_provider_proto_rawDesc = "" +
 	"\n" +
-	"\x17exchange/provider.proto\x12\x11exchange.provider\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15exchange/common.proto\"\xf2\x01\n" +
+	"\x17exchange/provider.proto\x12\x11exchange.provider\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x15exchange/common.proto\"\xde\x02\n" +
 	"\bProvider\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
-	"\x03url\x18\x03 \x01(\tR\x03url\x12\x17\n" +
-	"\x04logo\x18\x04 \x01(\tH\x00R\x04logo\x88\x01\x01\x12\x16\n" +
-	"\x06active\x18\x05 \x01(\bR\x06active\x129\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x10\n" +
+	"\x03url\x18\x04 \x01(\tR\x03url\x12\x17\n" +
+	"\x04logo\x18\x05 \x01(\tH\x00R\x04logo\x88\x01\x01\x12\x16\n" +
+	"\x06active\x18\x06 \x01(\bR\x06active\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\a\n" +
-	"\x05_logo\"\x83\x02\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12C\n" +
+	"\x0elogo_thumbnail\x18\t \x01(\v2\x17.google.protobuf.StructH\x01R\rlogoThumbnail\x88\x01\x01B\a\n" +
+	"\x05_logoB\x11\n" +
+	"\x0f_logo_thumbnail\"\x83\x02\n" +
 	"\fProviderCoin\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12!\n" +
 	"\fprovider_uid\x18\x02 \x01(\tR\vproviderUid\x12\x19\n" +
@@ -1126,30 +1163,33 @@ const file_exchange_provider_proto_rawDesc = "" +
 	"\rFilterRequest\x12\x12\n" +
 	"\x04uids\x18\x01 \x03(\tR\x04uids\x12\x1b\n" +
 	"\x06active\x18\x02 \x01(\bH\x00R\x06active\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x03 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x19\n" +
 	"\x05query\x18\x04 \x01(\tH\x02R\x05query\x88\x01\x01B\t\n" +
 	"\a_activeB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_codeB\b\n" +
 	"\x06_query\"l\n" +
 	"\fListResponse\x121\n" +
 	"\x05items\x18\x01 \x03(\v2\x1b.exchange.provider.ProviderR\x05items\x12)\n" +
-	"\x04meta\x18\x02 \x01(\v2\x15.exchange.common.MetaR\x04meta\"|\n" +
+	"\x04meta\x18\x02 \x01(\v2\x15.exchange.common.MetaR\x04meta\"\x90\x01\n" +
 	"\n" +
 	"AddRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x10\n" +
-	"\x03url\x18\x02 \x01(\tR\x03url\x12\x17\n" +
-	"\x04logo\x18\x03 \x01(\tH\x00R\x04logo\x88\x01\x01\x12\x1b\n" +
-	"\x06active\x18\x04 \x01(\bH\x01R\x06active\x88\x01\x01B\a\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
+	"\x03url\x18\x03 \x01(\tR\x03url\x12\x17\n" +
+	"\x04logo\x18\x04 \x01(\tH\x00R\x04logo\x88\x01\x01\x12\x1b\n" +
+	"\x06active\x18\x05 \x01(\bH\x01R\x06active\x88\x01\x01B\a\n" +
 	"\x05_logoB\t\n" +
 	"\a_active\"\x1f\n" +
 	"\vAddResponse\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\tR\x03uid\"\xac\x01\n" +
+	"\x03uid\x18\x01 \x01(\tR\x03uid\"\xce\x01\n" +
 	"\rUpdateRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x15\n" +
-	"\x03url\x18\x03 \x01(\tH\x01R\x03url\x88\x01\x01\x12\x17\n" +
-	"\x04logo\x18\x04 \x01(\tH\x02R\x04logo\x88\x01\x01\x12\x1b\n" +
-	"\x06active\x18\x05 \x01(\bH\x03R\x06active\x88\x01\x01B\a\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x15\n" +
+	"\x03url\x18\x04 \x01(\tH\x02R\x03url\x88\x01\x01\x12\x17\n" +
+	"\x04logo\x18\x05 \x01(\tH\x03R\x04logo\x88\x01\x01\x12\x1b\n" +
+	"\x06active\x18\x06 \x01(\bH\x04R\x06active\x88\x01\x01B\a\n" +
+	"\x05_codeB\a\n" +
 	"\x05_nameB\x06\n" +
 	"\x04_urlB\a\n" +
 	"\x05_logoB\t\n" +
@@ -1228,43 +1268,45 @@ var file_exchange_provider_proto_goTypes = []any{
 	(*FilterCoinRequest)(nil),     // 16: exchange.provider.FilterCoinRequest
 	(*ListCoinResponse)(nil),      // 17: exchange.provider.ListCoinResponse
 	(*timestamppb.Timestamp)(nil), // 18: google.protobuf.Timestamp
-	(*common.Pagination)(nil),     // 19: exchange.common.Pagination
-	(*common.Meta)(nil),           // 20: exchange.common.Meta
+	(*structpb.Struct)(nil),       // 19: google.protobuf.Struct
+	(*common.Pagination)(nil),     // 20: exchange.common.Pagination
+	(*common.Meta)(nil),           // 21: exchange.common.Meta
 }
 var file_exchange_provider_proto_depIdxs = []int32{
 	18, // 0: exchange.provider.Provider.created_at:type_name -> google.protobuf.Timestamp
 	18, // 1: exchange.provider.Provider.updated_at:type_name -> google.protobuf.Timestamp
-	18, // 2: exchange.provider.ProviderCoin.created_at:type_name -> google.protobuf.Timestamp
-	18, // 3: exchange.provider.ProviderCoin.updated_at:type_name -> google.protobuf.Timestamp
-	19, // 4: exchange.provider.ListRequest.pagination:type_name -> exchange.common.Pagination
-	4,  // 5: exchange.provider.ListRequest.filter:type_name -> exchange.provider.FilterRequest
-	0,  // 6: exchange.provider.ListResponse.items:type_name -> exchange.provider.Provider
-	20, // 7: exchange.provider.ListResponse.meta:type_name -> exchange.common.Meta
-	19, // 8: exchange.provider.ListCoinRequest.pagination:type_name -> exchange.common.Pagination
-	16, // 9: exchange.provider.ListCoinRequest.filter:type_name -> exchange.provider.FilterCoinRequest
-	1,  // 10: exchange.provider.ListCoinResponse.items:type_name -> exchange.provider.ProviderCoin
-	20, // 11: exchange.provider.ListCoinResponse.meta:type_name -> exchange.common.Meta
-	2,  // 12: exchange.provider.ProviderService.Get:input_type -> exchange.provider.GetRequest
-	3,  // 13: exchange.provider.ProviderService.List:input_type -> exchange.provider.ListRequest
-	6,  // 14: exchange.provider.ProviderService.Add:input_type -> exchange.provider.AddRequest
-	8,  // 15: exchange.provider.ProviderService.Update:input_type -> exchange.provider.UpdateRequest
-	10, // 16: exchange.provider.ProviderService.Delete:input_type -> exchange.provider.DeleteRequest
-	12, // 17: exchange.provider.ProviderService.UploadLogo:input_type -> exchange.provider.UploadLogoRequest
-	14, // 18: exchange.provider.ProviderService.GetCoin:input_type -> exchange.provider.GetCoinRequest
-	15, // 19: exchange.provider.ProviderService.ListCoin:input_type -> exchange.provider.ListCoinRequest
-	0,  // 20: exchange.provider.ProviderService.Get:output_type -> exchange.provider.Provider
-	5,  // 21: exchange.provider.ProviderService.List:output_type -> exchange.provider.ListResponse
-	7,  // 22: exchange.provider.ProviderService.Add:output_type -> exchange.provider.AddResponse
-	9,  // 23: exchange.provider.ProviderService.Update:output_type -> exchange.provider.UpdateResponse
-	11, // 24: exchange.provider.ProviderService.Delete:output_type -> exchange.provider.DeleteResponse
-	13, // 25: exchange.provider.ProviderService.UploadLogo:output_type -> exchange.provider.UploadLogoResponse
-	1,  // 26: exchange.provider.ProviderService.GetCoin:output_type -> exchange.provider.ProviderCoin
-	17, // 27: exchange.provider.ProviderService.ListCoin:output_type -> exchange.provider.ListCoinResponse
-	20, // [20:28] is the sub-list for method output_type
-	12, // [12:20] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	19, // 2: exchange.provider.Provider.logo_thumbnail:type_name -> google.protobuf.Struct
+	18, // 3: exchange.provider.ProviderCoin.created_at:type_name -> google.protobuf.Timestamp
+	18, // 4: exchange.provider.ProviderCoin.updated_at:type_name -> google.protobuf.Timestamp
+	20, // 5: exchange.provider.ListRequest.pagination:type_name -> exchange.common.Pagination
+	4,  // 6: exchange.provider.ListRequest.filter:type_name -> exchange.provider.FilterRequest
+	0,  // 7: exchange.provider.ListResponse.items:type_name -> exchange.provider.Provider
+	21, // 8: exchange.provider.ListResponse.meta:type_name -> exchange.common.Meta
+	20, // 9: exchange.provider.ListCoinRequest.pagination:type_name -> exchange.common.Pagination
+	16, // 10: exchange.provider.ListCoinRequest.filter:type_name -> exchange.provider.FilterCoinRequest
+	1,  // 11: exchange.provider.ListCoinResponse.items:type_name -> exchange.provider.ProviderCoin
+	21, // 12: exchange.provider.ListCoinResponse.meta:type_name -> exchange.common.Meta
+	2,  // 13: exchange.provider.ProviderService.Get:input_type -> exchange.provider.GetRequest
+	3,  // 14: exchange.provider.ProviderService.List:input_type -> exchange.provider.ListRequest
+	6,  // 15: exchange.provider.ProviderService.Add:input_type -> exchange.provider.AddRequest
+	8,  // 16: exchange.provider.ProviderService.Update:input_type -> exchange.provider.UpdateRequest
+	10, // 17: exchange.provider.ProviderService.Delete:input_type -> exchange.provider.DeleteRequest
+	12, // 18: exchange.provider.ProviderService.UploadLogo:input_type -> exchange.provider.UploadLogoRequest
+	14, // 19: exchange.provider.ProviderService.GetCoin:input_type -> exchange.provider.GetCoinRequest
+	15, // 20: exchange.provider.ProviderService.ListCoin:input_type -> exchange.provider.ListCoinRequest
+	0,  // 21: exchange.provider.ProviderService.Get:output_type -> exchange.provider.Provider
+	5,  // 22: exchange.provider.ProviderService.List:output_type -> exchange.provider.ListResponse
+	7,  // 23: exchange.provider.ProviderService.Add:output_type -> exchange.provider.AddResponse
+	9,  // 24: exchange.provider.ProviderService.Update:output_type -> exchange.provider.UpdateResponse
+	11, // 25: exchange.provider.ProviderService.Delete:output_type -> exchange.provider.DeleteResponse
+	13, // 26: exchange.provider.ProviderService.UploadLogo:output_type -> exchange.provider.UploadLogoResponse
+	1,  // 27: exchange.provider.ProviderService.GetCoin:output_type -> exchange.provider.ProviderCoin
+	17, // 28: exchange.provider.ProviderService.ListCoin:output_type -> exchange.provider.ListCoinResponse
+	21, // [21:29] is the sub-list for method output_type
+	13, // [13:21] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_exchange_provider_proto_init() }

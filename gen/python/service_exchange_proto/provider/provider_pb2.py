@@ -23,10 +23,11 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from service_exchange_proto.common import common_pb2 as exchange_dot_common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x17\x65xchange/provider.proto\x12\x11\x65xchange.provider\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15\x65xchange/common.proto\"\xbe\x01\n\x08Provider\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03url\x18\x03 \x01(\t\x12\x11\n\x04logo\x18\x04 \x01(\tH\x00\x88\x01\x01\x12\x0e\n\x06\x61\x63tive\x18\x05 \x01(\x08\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x07\n\x05_logo\"\xc3\x01\n\x0cProviderCoin\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x14\n\x0cprovider_uid\x18\x02 \x01(\t\x12\x10\n\x08\x63oin_uid\x18\x03 \x01(\t\x12\x0e\n\x06\x65xt_id\x18\x04 \x01(\t\x12\x0e\n\x06\x61\x63tive\x18\x05 \x01(\x08\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x19\n\nGetRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\"p\n\x0bListRequest\x12/\n\npagination\x18\x01 \x01(\x0b\x32\x1b.exchange.common.Pagination\x12\x30\n\x06\x66ilter\x18\x02 \x01(\x0b\x32 .exchange.provider.FilterRequest\"w\n\rFilterRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\x12\x13\n\x06\x61\x63tive\x18\x02 \x01(\x08H\x00\x88\x01\x01\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x12\n\x05query\x18\x04 \x01(\tH\x02\x88\x01\x01\x42\t\n\x07_activeB\x07\n\x05_nameB\x08\n\x06_query\"_\n\x0cListResponse\x12*\n\x05items\x18\x01 \x03(\x0b\x32\x1b.exchange.provider.Provider\x12#\n\x04meta\x18\x02 \x01(\x0b\x32\x15.exchange.common.Meta\"c\n\nAddRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x11\n\x04logo\x18\x03 \x01(\tH\x00\x88\x01\x01\x12\x13\n\x06\x61\x63tive\x18\x04 \x01(\x08H\x01\x88\x01\x01\x42\x07\n\x05_logoB\t\n\x07_active\"\x1a\n\x0b\x41\x64\x64Response\x12\x0b\n\x03uid\x18\x01 \x01(\t\"\x8e\x01\n\rUpdateRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x11\n\x04name\x18\x02 \x01(\tH\x00\x88\x01\x01\x12\x10\n\x03url\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x11\n\x04logo\x18\x04 \x01(\tH\x02\x88\x01\x01\x12\x13\n\x06\x61\x63tive\x18\x05 \x01(\x08H\x03\x88\x01\x01\x42\x07\n\x05_nameB\x06\n\x04_urlB\x07\n\x05_logoB\t\n\x07_active\"!\n\x0eUpdateResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\x1c\n\rDeleteRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\"!\n\x0e\x44\x65leteResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\"\n\x11UploadLogoRequest\x12\r\n\x05\x63hunk\x18\x01 \x01(\x0c\"&\n\x12UploadLogoResponse\x12\x10\n\x08logo_url\x18\x01 \x01(\t\"8\n\x0eGetCoinRequest\x12\x14\n\x0cprovider_uid\x18\x01 \x01(\t\x12\x10\n\x08\x63oin_uid\x18\x02 \x01(\t\"\x8e\x01\n\x0fListCoinRequest\x12\x14\n\x0cprovider_uid\x18\x01 \x01(\t\x12/\n\npagination\x18\x02 \x01(\x0b\x32\x1b.exchange.common.Pagination\x12\x34\n\x06\x66ilter\x18\x03 \x01(\x0b\x32$.exchange.provider.FilterCoinRequest\"\x83\x01\n\x11\x46ilterCoinRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\x12\x11\n\tcoin_uids\x18\x02 \x03(\t\x12\x0f\n\x07\x65xt_ids\x18\x03 \x03(\t\x12\x13\n\x06\x61\x63tive\x18\x04 \x01(\x08H\x00\x88\x01\x01\x12\x12\n\x05query\x18\x05 \x01(\tH\x01\x88\x01\x01\x42\t\n\x07_activeB\x08\n\x06_query\"g\n\x10ListCoinResponse\x12.\n\x05items\x18\x01 \x03(\x0b\x32\x1f.exchange.provider.ProviderCoin\x12#\n\x04meta\x18\x02 \x01(\x0b\x32\x15.exchange.common.Meta2\x82\x05\n\x0fProviderService\x12\x41\n\x03Get\x12\x1d.exchange.provider.GetRequest\x1a\x1b.exchange.provider.Provider\x12G\n\x04List\x12\x1e.exchange.provider.ListRequest\x1a\x1f.exchange.provider.ListResponse\x12\x44\n\x03\x41\x64\x64\x12\x1d.exchange.provider.AddRequest\x1a\x1e.exchange.provider.AddResponse\x12M\n\x06Update\x12 .exchange.provider.UpdateRequest\x1a!.exchange.provider.UpdateResponse\x12M\n\x06\x44\x65lete\x12 .exchange.provider.DeleteRequest\x1a!.exchange.provider.DeleteResponse\x12[\n\nUploadLogo\x12$.exchange.provider.UploadLogoRequest\x1a%.exchange.provider.UploadLogoResponse(\x01\x12M\n\x07GetCoin\x12!.exchange.provider.GetCoinRequest\x1a\x1f.exchange.provider.ProviderCoin\x12S\n\x08ListCoin\x12\".exchange.provider.ListCoinRequest\x1a#.exchange.provider.ListCoinResponseBGZEgithub.com/vexa-group/service-exchange-proto/gen/go/provider;providerb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x17\x65xchange/provider.proto\x12\x11\x65xchange.provider\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x15\x65xchange/common.proto\"\x95\x02\n\x08Provider\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0c\n\x04\x63ode\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0b\n\x03url\x18\x04 \x01(\t\x12\x11\n\x04logo\x18\x05 \x01(\tH\x00\x88\x01\x01\x12\x0e\n\x06\x61\x63tive\x18\x06 \x01(\x08\x12.\n\ncreated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x0elogo_thumbnail\x18\t \x01(\x0b\x32\x17.google.protobuf.StructH\x01\x88\x01\x01\x42\x07\n\x05_logoB\x11\n\x0f_logo_thumbnail\"\xc3\x01\n\x0cProviderCoin\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x14\n\x0cprovider_uid\x18\x02 \x01(\t\x12\x10\n\x08\x63oin_uid\x18\x03 \x01(\t\x12\x0e\n\x06\x65xt_id\x18\x04 \x01(\t\x12\x0e\n\x06\x61\x63tive\x18\x05 \x01(\x08\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x19\n\nGetRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\"p\n\x0bListRequest\x12/\n\npagination\x18\x01 \x01(\x0b\x32\x1b.exchange.common.Pagination\x12\x30\n\x06\x66ilter\x18\x02 \x01(\x0b\x32 .exchange.provider.FilterRequest\"w\n\rFilterRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\x12\x13\n\x06\x61\x63tive\x18\x02 \x01(\x08H\x00\x88\x01\x01\x12\x11\n\x04\x63ode\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x12\n\x05query\x18\x04 \x01(\tH\x02\x88\x01\x01\x42\t\n\x07_activeB\x07\n\x05_codeB\x08\n\x06_query\"_\n\x0cListResponse\x12*\n\x05items\x18\x01 \x03(\x0b\x32\x1b.exchange.provider.Provider\x12#\n\x04meta\x18\x02 \x01(\x0b\x32\x15.exchange.common.Meta\"q\n\nAddRequest\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03url\x18\x03 \x01(\t\x12\x11\n\x04logo\x18\x04 \x01(\tH\x00\x88\x01\x01\x12\x13\n\x06\x61\x63tive\x18\x05 \x01(\x08H\x01\x88\x01\x01\x42\x07\n\x05_logoB\t\n\x07_active\"\x1a\n\x0b\x41\x64\x64Response\x12\x0b\n\x03uid\x18\x01 \x01(\t\"\xaa\x01\n\rUpdateRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x11\n\x04\x63ode\x18\x02 \x01(\tH\x00\x88\x01\x01\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x10\n\x03url\x18\x04 \x01(\tH\x02\x88\x01\x01\x12\x11\n\x04logo\x18\x05 \x01(\tH\x03\x88\x01\x01\x12\x13\n\x06\x61\x63tive\x18\x06 \x01(\x08H\x04\x88\x01\x01\x42\x07\n\x05_codeB\x07\n\x05_nameB\x06\n\x04_urlB\x07\n\x05_logoB\t\n\x07_active\"!\n\x0eUpdateResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\x1c\n\rDeleteRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\"!\n\x0e\x44\x65leteResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\"\n\x11UploadLogoRequest\x12\r\n\x05\x63hunk\x18\x01 \x01(\x0c\"&\n\x12UploadLogoResponse\x12\x10\n\x08logo_url\x18\x01 \x01(\t\"8\n\x0eGetCoinRequest\x12\x14\n\x0cprovider_uid\x18\x01 \x01(\t\x12\x10\n\x08\x63oin_uid\x18\x02 \x01(\t\"\x8e\x01\n\x0fListCoinRequest\x12\x14\n\x0cprovider_uid\x18\x01 \x01(\t\x12/\n\npagination\x18\x02 \x01(\x0b\x32\x1b.exchange.common.Pagination\x12\x34\n\x06\x66ilter\x18\x03 \x01(\x0b\x32$.exchange.provider.FilterCoinRequest\"\x83\x01\n\x11\x46ilterCoinRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\x12\x11\n\tcoin_uids\x18\x02 \x03(\t\x12\x0f\n\x07\x65xt_ids\x18\x03 \x03(\t\x12\x13\n\x06\x61\x63tive\x18\x04 \x01(\x08H\x00\x88\x01\x01\x12\x12\n\x05query\x18\x05 \x01(\tH\x01\x88\x01\x01\x42\t\n\x07_activeB\x08\n\x06_query\"g\n\x10ListCoinResponse\x12.\n\x05items\x18\x01 \x03(\x0b\x32\x1f.exchange.provider.ProviderCoin\x12#\n\x04meta\x18\x02 \x01(\x0b\x32\x15.exchange.common.Meta2\x82\x05\n\x0fProviderService\x12\x41\n\x03Get\x12\x1d.exchange.provider.GetRequest\x1a\x1b.exchange.provider.Provider\x12G\n\x04List\x12\x1e.exchange.provider.ListRequest\x1a\x1f.exchange.provider.ListResponse\x12\x44\n\x03\x41\x64\x64\x12\x1d.exchange.provider.AddRequest\x1a\x1e.exchange.provider.AddResponse\x12M\n\x06Update\x12 .exchange.provider.UpdateRequest\x1a!.exchange.provider.UpdateResponse\x12M\n\x06\x44\x65lete\x12 .exchange.provider.DeleteRequest\x1a!.exchange.provider.DeleteResponse\x12[\n\nUploadLogo\x12$.exchange.provider.UploadLogoRequest\x1a%.exchange.provider.UploadLogoResponse(\x01\x12M\n\x07GetCoin\x12!.exchange.provider.GetCoinRequest\x1a\x1f.exchange.provider.ProviderCoin\x12S\n\x08ListCoin\x12\".exchange.provider.ListCoinRequest\x1a#.exchange.provider.ListCoinResponseBGZEgithub.com/vexa-group/service-exchange-proto/gen/go/provider;providerb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,42 +35,42 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'exchange.provider_pb2', _gl
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'ZEgithub.com/vexa-group/service-exchange-proto/gen/go/provider;provider'
-  _globals['_PROVIDER']._serialized_start=103
-  _globals['_PROVIDER']._serialized_end=293
-  _globals['_PROVIDERCOIN']._serialized_start=296
-  _globals['_PROVIDERCOIN']._serialized_end=491
-  _globals['_GETREQUEST']._serialized_start=493
-  _globals['_GETREQUEST']._serialized_end=518
-  _globals['_LISTREQUEST']._serialized_start=520
-  _globals['_LISTREQUEST']._serialized_end=632
-  _globals['_FILTERREQUEST']._serialized_start=634
-  _globals['_FILTERREQUEST']._serialized_end=753
-  _globals['_LISTRESPONSE']._serialized_start=755
-  _globals['_LISTRESPONSE']._serialized_end=850
-  _globals['_ADDREQUEST']._serialized_start=852
-  _globals['_ADDREQUEST']._serialized_end=951
-  _globals['_ADDRESPONSE']._serialized_start=953
-  _globals['_ADDRESPONSE']._serialized_end=979
-  _globals['_UPDATEREQUEST']._serialized_start=982
-  _globals['_UPDATEREQUEST']._serialized_end=1124
-  _globals['_UPDATERESPONSE']._serialized_start=1126
-  _globals['_UPDATERESPONSE']._serialized_end=1159
-  _globals['_DELETEREQUEST']._serialized_start=1161
-  _globals['_DELETEREQUEST']._serialized_end=1189
-  _globals['_DELETERESPONSE']._serialized_start=1191
-  _globals['_DELETERESPONSE']._serialized_end=1224
-  _globals['_UPLOADLOGOREQUEST']._serialized_start=1226
-  _globals['_UPLOADLOGOREQUEST']._serialized_end=1260
-  _globals['_UPLOADLOGORESPONSE']._serialized_start=1262
-  _globals['_UPLOADLOGORESPONSE']._serialized_end=1300
-  _globals['_GETCOINREQUEST']._serialized_start=1302
-  _globals['_GETCOINREQUEST']._serialized_end=1358
-  _globals['_LISTCOINREQUEST']._serialized_start=1361
-  _globals['_LISTCOINREQUEST']._serialized_end=1503
-  _globals['_FILTERCOINREQUEST']._serialized_start=1506
-  _globals['_FILTERCOINREQUEST']._serialized_end=1637
-  _globals['_LISTCOINRESPONSE']._serialized_start=1639
-  _globals['_LISTCOINRESPONSE']._serialized_end=1742
-  _globals['_PROVIDERSERVICE']._serialized_start=1745
-  _globals['_PROVIDERSERVICE']._serialized_end=2387
+  _globals['_PROVIDER']._serialized_start=133
+  _globals['_PROVIDER']._serialized_end=410
+  _globals['_PROVIDERCOIN']._serialized_start=413
+  _globals['_PROVIDERCOIN']._serialized_end=608
+  _globals['_GETREQUEST']._serialized_start=610
+  _globals['_GETREQUEST']._serialized_end=635
+  _globals['_LISTREQUEST']._serialized_start=637
+  _globals['_LISTREQUEST']._serialized_end=749
+  _globals['_FILTERREQUEST']._serialized_start=751
+  _globals['_FILTERREQUEST']._serialized_end=870
+  _globals['_LISTRESPONSE']._serialized_start=872
+  _globals['_LISTRESPONSE']._serialized_end=967
+  _globals['_ADDREQUEST']._serialized_start=969
+  _globals['_ADDREQUEST']._serialized_end=1082
+  _globals['_ADDRESPONSE']._serialized_start=1084
+  _globals['_ADDRESPONSE']._serialized_end=1110
+  _globals['_UPDATEREQUEST']._serialized_start=1113
+  _globals['_UPDATEREQUEST']._serialized_end=1283
+  _globals['_UPDATERESPONSE']._serialized_start=1285
+  _globals['_UPDATERESPONSE']._serialized_end=1318
+  _globals['_DELETEREQUEST']._serialized_start=1320
+  _globals['_DELETEREQUEST']._serialized_end=1348
+  _globals['_DELETERESPONSE']._serialized_start=1350
+  _globals['_DELETERESPONSE']._serialized_end=1383
+  _globals['_UPLOADLOGOREQUEST']._serialized_start=1385
+  _globals['_UPLOADLOGOREQUEST']._serialized_end=1419
+  _globals['_UPLOADLOGORESPONSE']._serialized_start=1421
+  _globals['_UPLOADLOGORESPONSE']._serialized_end=1459
+  _globals['_GETCOINREQUEST']._serialized_start=1461
+  _globals['_GETCOINREQUEST']._serialized_end=1517
+  _globals['_LISTCOINREQUEST']._serialized_start=1520
+  _globals['_LISTCOINREQUEST']._serialized_end=1662
+  _globals['_FILTERCOINREQUEST']._serialized_start=1665
+  _globals['_FILTERCOINREQUEST']._serialized_end=1796
+  _globals['_LISTCOINRESPONSE']._serialized_start=1798
+  _globals['_LISTCOINRESPONSE']._serialized_end=1901
+  _globals['_PROVIDERSERVICE']._serialized_start=1904
+  _globals['_PROVIDERSERVICE']._serialized_end=2546
 # @@protoc_insertion_point(module_scope)

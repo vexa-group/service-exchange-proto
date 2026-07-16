@@ -5,6 +5,7 @@ package exchange.provider;
 option go_package = "github.com/vexa-group/service-exchange-proto/gen/go/provider;provider";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 import "exchange/common.proto";  // Import the common proto
 
 // Provider service definition.
@@ -28,12 +29,16 @@ service ProviderService {
 // Provider message.
 message Provider {
   string uid = 1;
-  string name = 2;
-  string url = 3;
-  optional string logo = 4;
-  bool active = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+  string code = 2;
+  string name = 3;
+  string url = 4;
+  optional string logo = 5;
+  bool active = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+
+  // extra
+  optional google.protobuf.Struct logo_thumbnail = 9;
 }
 
 // Provider Coin message
@@ -62,7 +67,7 @@ message ListRequest {
 message FilterRequest {
   repeated string uids = 1;
   optional bool active = 2;
-  optional string name = 3;
+  optional string code = 3;
   optional string query = 4;
 }
 
@@ -74,10 +79,11 @@ message ListResponse {
 
 // Request message for Add Provider with base64 logo for small files.
 message AddRequest {
-  string name = 1;
-  string url = 2;
-  optional string logo = 3; // Base64-encoded file content for small files
-  optional bool active = 4;
+  string code = 1;
+  string name = 2;
+  string url = 3;
+  optional string logo = 4; // Base64-encoded file content for small files
+  optional bool active = 5;
 }
 
 // Response message for Add Provider.
@@ -88,10 +94,11 @@ message AddResponse {
 // Request message for Update Provider with base64 logo for small files.
 message UpdateRequest {
   string uid = 1;
-  optional string name = 2;
-  optional string url = 3;
-  optional string logo = 4;// Base64-encoded file content for small files
-  optional bool active = 5;
+  optional string code = 2;
+  optional string name = 3;
+  optional string url = 4;
+  optional string logo = 5;// Base64-encoded file content for small files
+  optional bool active = 6;
 }
 
 // Response message for Update Provider.
